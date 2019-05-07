@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xf_mingsu.mapper.usersMapper" >
+  <resultMap id="BaseResultMap" type="com.xf_mingsu.mapper.pojo.users" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_unionid" property="userUnionid" jdbcType="VARCHAR" />
+    <result column="user_openid" property="userOpenid" jdbcType="VARCHAR" />
+    <result column="user_nickname" property="userNickname" jdbcType="VARCHAR" />
+    <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+    <result column="user_avatarUrl" property="userAvatarurl" jdbcType="VARCHAR" />
+    <result column="user_gender" property="userGender" jdbcType="INTEGER" />
+    <result column="flag_del" property="flagDel" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_unionid, user_openid, user_nickname, user_phone, user_avatarUrl, user_gender, 
+    flag_del, create_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.xf_mingsu.mapper.pojo.usersExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from ms_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ms_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ms_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.xf_mingsu.mapper.pojo.usersExample" >
+    delete from ms_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.xf_mingsu.mapper.pojo.users" >
+    insert into ms_user (id, user_unionid, user_openid, 
+      user_nickname, user_phone, user_avatarUrl, 
+      user_gender, flag_del, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{userUnionid,jdbcType=VARCHAR}, #{userOpenid,jdbcType=VARCHAR}, 
+      #{userNickname,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, #{userAvatarurl,jdbcType=VARCHAR}, 
+      #{userGender,jdbcType=INTEGER}, #{flagDel,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xf_mingsu.mapper.pojo.users" >
+    insert into ms_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userUnionid != null" >
+        user_unionid,
+      </if>
+      <if test="userOpenid != null" >
+        user_openid,
+      </if>
+      <if test="userNickname != null" >
+        user_nickname,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="userAvatarurl != null" >
+        user_avatarUrl,
+      </if>
+      <if test="userGender != null" >
+        user_gender,
+      </if>
+      <if test="flagDel != null" >
+        flag_del,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userUnionid != null" >
+        #{userUnionid,jdbcType=VARCHAR},
+      </if>
+      <if test="userOpenid != null" >
+        #{userOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="userNickname != null" >
+        #{userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userAvatarurl != null" >
+        #{userAvatarurl,jdbcType=VARCHAR},
+      </if>
+      <if test="userGender != null" >
+        #{userGender,jdbcType=INTEGER},
+      </if>
+      <if test="flagDel != null" >
+        #{flagDel,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.xf_mingsu.mapper.pojo.usersExample" resultType="java.lang.Integer" >
+    select count(*) from ms_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ms_user
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userUnionid != null" >
+        user_unionid = #{record.userUnionid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userOpenid != null" >
+        user_openid = #{record.userOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userNickname != null" >
+        user_nickname = #{record.userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPhone != null" >
+        user_phone = #{record.userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userAvatarurl != null" >
+        user_avatarUrl = #{record.userAvatarurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userGender != null" >
+        user_gender = #{record.userGender,jdbcType=INTEGER},
+      </if>
+      <if test="record.flagDel != null" >
+        flag_del = #{record.flagDel,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ms_user
+    set id = #{record.id,jdbcType=INTEGER},
+      user_unionid = #{record.userUnionid,jdbcType=VARCHAR},
+      user_openid = #{record.userOpenid,jdbcType=VARCHAR},
+      user_nickname = #{record.userNickname,jdbcType=VARCHAR},
+      user_phone = #{record.userPhone,jdbcType=VARCHAR},
+      user_avatarUrl = #{record.userAvatarurl,jdbcType=VARCHAR},
+      user_gender = #{record.userGender,jdbcType=INTEGER},
+      flag_del = #{record.flagDel,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xf_mingsu.mapper.pojo.users" >
+    update ms_user
+    <set >
+      <if test="userUnionid != null" >
+        user_unionid = #{userUnionid,jdbcType=VARCHAR},
+      </if>
+      <if test="userOpenid != null" >
+        user_openid = #{userOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="userNickname != null" >
+        user_nickname = #{userNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userAvatarurl != null" >
+        user_avatarUrl = #{userAvatarurl,jdbcType=VARCHAR},
+      </if>
+      <if test="userGender != null" >
+        user_gender = #{userGender,jdbcType=INTEGER},
+      </if>
+      <if test="flagDel != null" >
+        flag_del = #{flagDel,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xf_mingsu.mapper.pojo.users" >
+    update ms_user
+    set user_unionid = #{userUnionid,jdbcType=VARCHAR},
+      user_openid = #{userOpenid,jdbcType=VARCHAR},
+      user_nickname = #{userNickname,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_avatarUrl = #{userAvatarurl,jdbcType=VARCHAR},
+      user_gender = #{userGender,jdbcType=INTEGER},
+      flag_del = #{flagDel,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
